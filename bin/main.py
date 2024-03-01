@@ -12,6 +12,7 @@ from mainwindow import MainWindow
 # TODO: create log-file where the program will write names of the files that will be downloaded
 # TODO: change net_export names to netexport
 # TODO: after starting remove the files, for instance: .ts_files, chrome-net-export, ...
+# TODO: deploy project for MacOS and Windows
 
 if __name__ == "__main__":
     try:
