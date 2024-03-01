@@ -1,12 +1,11 @@
 import json
-import os
 import re
 
 
 class NetExport:
-    def __init__(self):
+    def __init__(self, filename):
         self.urls = []
-        with open('chrome-net-export-log.json', 'r') as jsonfile:
+        with open(filename, 'r') as jsonfile:
             self.log = str(json.loads(jsonfile.read()))
 
     def parse_log(self):

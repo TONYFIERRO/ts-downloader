@@ -1,11 +1,25 @@
 import validators
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLineEdit, QGroupBox, QPushButton, QSpacerItem, QSizePolicy, QLabel, \
-    QMainWindow, QCheckBox, QHBoxLayout
 
-from bin.aboutwidget import About
-from bin.agreementwidget import Agreement
-from bin.chromeopener import ChromeOpener
+from PyQt5.QtCore import (
+    Qt
+)
+from PyQt5.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QLineEdit,
+    QGroupBox,
+    QPushButton,
+    QSpacerItem,
+    QSizePolicy,
+    QLabel,
+    QMainWindow,
+    QCheckBox,
+    QHBoxLayout
+)
+
+from bin.aboutwidget import AboutWidget
+from bin.downloadwidget import DownloadWidget
+from bin.helpwidget import HelpWidget
 
 
 class MainWindow(QMainWindow):
@@ -14,16 +28,18 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("TS-Downloader")
         self.setFixedSize(400, 400)
 
-        self.about_widget = About()
-        self.agreement_widget = Agreement()
-        self.chrome_opener = ChromeOpener()
+        self.download_widget = None
+
+        self.about_widget = AboutWidget()
+        self.help_widget = HelpWidget()
         self.main_widget = QWidget()
         self.v_layout = QVBoxLayout()
         self.group_box_url = QGroupBox('URL')
         self.group_box_url_layout = QVBoxLayout()
         self.line_edit_url = QLineEdit('')
         self.button_start = QPushButton('Start')
-        self.button_about = QPushButton('About')
+        self.button_how_does_it_work = QPushButton('How does it work?')
+        self.button_about = QPushButton('About the program')
         self.label_icon = QLabel("TS-Downloader")
         self.group_box_formats = QGroupBox('Output Format')
         self.group_box_formats_layout = QHBoxLayout()
@@ -41,6 +57,7 @@ class MainWindow(QMainWindow):
         self.v_layout.addWidget(self.group_box_formats)
         self.v_layout.addWidget(self.button_start)
         self.v_layout.addItem(QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding))
+        self.v_layout.addWidget(self.button_how_does_it_work)
         self.v_layout.addWidget(self.button_about)
         self.group_box_formats.setLayout(self.group_box_formats_layout)
         self.group_box_formats_layout.addWidget(self.checkbox_mp3)
@@ -59,17 +76,19 @@ class MainWindow(QMainWindow):
         self.line_edit_url.textChanged.connect(self.handle_activation_button_start)
         self.checkbox_mp4.clicked.connect(self.handle_activation_button_start)
         self.checkbox_mp3.clicked.connect(self.handle_activation_button_start)
+        self.button_how_does_it_work.clicked.connect(self.handle_button_how_does_it_work)
+
+    def handle_button_how_does_it_work(self):
+        self.help_widget.show_widget()
 
     def handle_button_about(self):
         self.about_widget.show_widget()
 
     def handle_button_start(self):
-        self.hide()
-        self.chrome_opener.url = self.line_edit_url.text()
-        self.chrome_opener.mp3_flag = self.checkbox_mp3.isChecked()
-        self.chrome_opener.mp4_flag = self.checkbox_mp4.isChecked()
-        self.agreement_widget.chrome_opener = self.chrome_opener
-        self.agreement_widget.show_widget()
+        self.download_widget = DownloadWidget(self.line_edit_url.text(),
+                                              self.checkbox_mp3.isChecked(),
+                                              self.checkbox_mp4.isChecked())
+        self.download_widget.show_widget()
 
     def handle_activation_button_start(self):
         if self.line_edit_url.text() != '' and validators.url(self.line_edit_url.text()):
