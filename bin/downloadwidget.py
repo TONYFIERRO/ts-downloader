@@ -1,37 +1,24 @@
-import datetime
 import os
-import time
-import pyautogui
-import requests
-from moviepy.video.io.VideoFileClip import VideoFileClip
-from selenium import webdriver
-from selenium.webdriver import ActionChains
-from selenium.webdriver.common.by import By
+import shutil
 
 from PyQt5.QtCore import (
     Qt,
     QThread
 )
-
 from PyQt5.QtWidgets import (
     QVBoxLayout,
     QLabel,
     QPushButton,
-    QGroupBox,
     QMessageBox,
     QProgressBar,
     QSpacerItem,
     QSizePolicy
 )
-
 from PyQt5.QtWidgets import (
     QWidget
 )
 
-from bin.chrome_with_prefs import ChromeWithPrefs
 from bin.chromeconnector import ChromeConnector
-from bin.net_export import NetExport
-from bin.ts_handler import TSHandler
 
 
 class DownloadWidget(QWidget):
@@ -46,6 +33,7 @@ class DownloadWidget(QWidget):
 
         self.thread = QThread()
 
+        self.start_recovery()
         self.chrome_connector = ChromeConnector(self.url)
         self.v_layout = QVBoxLayout()
         self.label_icon = QLabel("TS-Downloader")
@@ -82,6 +70,30 @@ class DownloadWidget(QWidget):
         self.chrome_connector.crashed.connect(self.open_crash_message)
 
         self.thread.start()
+
+    @staticmethod
+    def start_recovery():
+        """
+        This is a method that recovers the program after a crash. For example, due to Internet problems.
+
+        """
+
+        tmp_files = [
+            'chrome-net-export-log.json',
+            'chunklist.m3u8',
+        ]
+
+        tmp_dirs = [
+            '.tmp_ts'
+        ]
+
+        for file in tmp_files:
+            if os.path.exists(file):
+                os.remove(file)
+
+        for directory in tmp_dirs:
+            if os.path.exists(directory):
+                shutil.rmtree(directory)
 
     def report_progress(self, value):
         self.progress_bar.setValue(value)

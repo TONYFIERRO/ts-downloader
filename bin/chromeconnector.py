@@ -1,34 +1,20 @@
 import datetime
 import os
-import time
-import pyautogui
-import requests
+
+from PyQt5.QtCore import (
+    QObject,
+    pyqtSignal
+)
 from moviepy.video.io.VideoFileClip import VideoFileClip
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
+import pyautogui
+import requests
 
-from PyQt5.QtCore import (
-    Qt,
-    QThread,
-    QObject, pyqtSignal
-)
-
-from PyQt5.QtWidgets import (
-    QVBoxLayout,
-    QLabel,
-    QPushButton,
-    QGroupBox,
-    QMessageBox
-)
-
-from PyQt5.QtWidgets import (
-    QWidget
-)
-
-from bin.chrome_with_prefs import ChromeWithPrefs
-from bin.net_export import NetExport
-from bin.ts_handler import TSHandler
+from bin.chromewithprefs import ChromeWithPrefs
+from bin.netexport import NetExport
+from bin.tshandler import TSHandler
 
 
 class ChromeConnector(QObject):

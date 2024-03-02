@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QLabel,
     QPushButton,
-    QCheckBox, QGroupBox
+    QGroupBox
 )
 
 

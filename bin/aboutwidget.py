@@ -19,7 +19,7 @@ class AboutWidget(QWidget):
 
         self.v_layout = QVBoxLayout()
         self.label_name = QLabel('TS-Downloader')
-        self.label_version = QLabel('Version 1.2')
+        self.label_version = QLabel('Version 1.2.1')
         self.label_description = QLabel('This is a program that downloads .ts-files from \na server and then'
                                         ' merges them into one \n.mp3/.mp4-file.')
         self.label_author = QLabel('Author: Shamil Zaripov')
