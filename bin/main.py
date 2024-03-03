@@ -1,5 +1,5 @@
-import os
 import sys
+
 import qdarktheme
 import requests
 
@@ -9,9 +9,6 @@ from PyQt5.QtWidgets import (
 )
 
 from mainwindow import MainWindow
-
-# TODO: Logging
-# TODO: Deploy the project (macOS, Windows)
 
 if __name__ == "__main__":
     try:

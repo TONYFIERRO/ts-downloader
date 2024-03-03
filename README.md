@@ -47,6 +47,7 @@
 
 * Import logging.
 * Deploy the program for macOS and Windows.
+* Add a text status of downloading in download widget.
 
 ## Licence
 

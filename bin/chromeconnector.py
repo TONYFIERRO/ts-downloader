@@ -18,11 +18,21 @@ from bin.tshandler import TSHandler
 
 
 class ChromeConnector(QObject):
+    """
+    The class is responsible for connecting with the Google Chrome browser.
+
+    """
+
     finished = pyqtSignal()
     report_progress = pyqtSignal(int)
-    crashed = pyqtSignal()
+    error = pyqtSignal()
 
-    def __init__(self, url):
+    def __init__(self, url) -> None:
+        """
+        The window initialization and its elements.
+
+        """
+
         super().__init__()
 
         self.url = url
@@ -43,7 +53,13 @@ class ChromeConnector(QObject):
         self.driver.switch_to.new_window('tab')
         self.driver.get(self.url)
 
-    def run(self):
+    def run(self) -> None:
+        """
+        The function that creates a connection with browser.
+        It works in a thread.
+
+        """
+
         self.driver.quit()
         self.report_progress.emit(0)
 
@@ -71,9 +87,14 @@ class ChromeConnector(QObject):
             if os.path.exists(file):
                 os.remove(file)
 
-            self.crashed.emit()
+            self.error.emit()
 
         self.finished.emit()
 
-    def get_current_time(self):
+    def get_current_time(self) -> datetime:
+        """
+        The function that returns the current time.
+
+        """
+
         return self.current_time

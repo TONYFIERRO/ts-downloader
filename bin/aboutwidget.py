@@ -12,7 +12,17 @@ from PyQt5.QtWidgets import (
 
 
 class AboutWidget(QWidget):
-    def __init__(self):
+    """
+    This class creates the window and provides information about the program.
+
+    """
+
+    def __init__(self) -> None:
+        """
+        The window initialization and its elements.
+
+        """
+
         super().__init__()
         self.setFixedSize(400, 420)
         self.setWindowTitle('About the program')
@@ -58,11 +68,26 @@ class AboutWidget(QWidget):
 
         self.define_connections()
 
-    def define_connections(self):
+    def define_connections(self) -> None:
+        """
+        This function defines connections between elements in the window.
+
+        """
+
         self.button_ok.clicked.connect(self.handle_button_ok)
 
-    def handle_button_ok(self):
+    def handle_button_ok(self) -> None:
+        """
+        The function that handles pushing 'OK' button.
+
+        """
+
         self.close()
 
-    def show_widget(self):
+    def show_widget(self) -> None:
+        """
+        This method opens the window.
+
+        """
+
         self.show()

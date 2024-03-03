@@ -22,14 +22,18 @@ header = {
 
 
 class VideoDecoder(object):
+    """
+    The class is responsible for decoding videos.
+
+    Source: https://github.com/hankchen1728/py_m3u8_downloader by the GitHub user "hankchen1728".
+
+    """
+
     def __init__(self, x_key: dict, m3u8_http_base: str = ""):
         self.method = x_key["METHOD"] if "METHOD" in x_key.keys() else ""
         self.uri = decode_key_uri(m3u8_http_base + x_key["URI"]) \
             if "URI" in x_key.keys() else ""
         self.iv = x_key["IV"].lstrip("0x") if "IV" in x_key.keys() else ""
-
-        # print("URI", self.uri)
-        # print("IV", self.iv)
 
     def decode_aes_128(self, video_fname: str):
         subprocess.run([
@@ -87,6 +91,12 @@ def download_ts_file(ts_url: str, store_dir: str, attempts: int = 10):
 
 
 class TSHandler:
+    """
+    The class is responsible for reading and parsing .m3u8 files, downloading and merging .ts files.
+
+    Source: https://github.com/hankchen1728/py_m3u8_downloader by the GitHub user "hankchen1728".
+    """
+
     def __init__(self, chunklist, output=None):
         self.startTime = datetime.now()
 

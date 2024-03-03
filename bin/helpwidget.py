@@ -12,7 +12,17 @@ from PyQt5.QtWidgets import (
 
 
 class HelpWidget(QWidget):
-    def __init__(self):
+    """
+    The class responsible for the instruction how to use the program.
+
+    """
+
+    def __init__(self) -> None:
+        """
+        The window initialization and its elements.
+
+        """
+
         super().__init__()
         self.setFixedSize(400, 400)
         self.setWindowTitle("Instruction")
@@ -56,11 +66,26 @@ class HelpWidget(QWidget):
 
         self.define_connections()
 
-    def define_connections(self):
+    def define_connections(self) -> None:
+        """
+        This function defines connections between elements in the window.
+
+        """
+
         self.button_ok.clicked.connect(self.handle_button_ok)
 
-    def handle_button_ok(self):
+    def handle_button_ok(self) -> None:
+        """
+        This is the handler of the OK button.
+
+        """
+
         self.close()
 
-    def show_widget(self):
+    def show_widget(self) -> None:
+        """
+        The function that opens the class window.
+
+        """
+
         self.show()

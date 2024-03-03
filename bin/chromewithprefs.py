@@ -9,6 +9,16 @@ from selenium import webdriver
 
 
 class ChromeWithPrefs(webdriver.Chrome):
+    """
+    The class solves the problem of not being able to add preferences as an experimental option in
+                                                                                    selenium.webdriver.Chrome.
+
+    Source:
+    https://github.com/ultrafunkamsterdam/undetected-chromedriver/issues/524
+                            by user named as "sebdelsol", who commented on Mar 3, 2022.
+
+    """
+
     def __init__(self, *args, options=None, **kwargs):
         if options:
             self._handle_prefs(options)

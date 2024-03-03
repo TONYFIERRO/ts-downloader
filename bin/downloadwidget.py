@@ -22,7 +22,17 @@ from bin.chromeconnector import ChromeConnector
 
 
 class DownloadWidget(QWidget):
-    def __init__(self, url, mp3_flag, mp4_flag):
+    """
+    The class creates a download window where users can track downloading status.
+
+    """
+
+    def __init__(self, url: str, mp3_flag: bool, mp4_flag: bool) -> None:
+        """
+        The window initialization and its elements.
+
+        """
+
         super().__init__()
         self.setFixedSize(400, 400)
         self.setWindowTitle('Download menu')
@@ -53,26 +63,35 @@ class DownloadWidget(QWidget):
 
         self.define_connections()
 
-    def define_connections(self):
+    def define_connections(self) -> None:
+        """
+        This function defines connections between elements in the window.
+
+        """
+
         self.button_start_downloading.clicked.connect(self.handle_button_start_downloading)
 
-    def handle_button_start_downloading(self):
+    def handle_button_start_downloading(self) -> None:
+        """
+        This is the handler of the start downloading button.
+
+        """
+
         self.button_start_downloading.setEnabled(False)
 
         self.chrome_connector.moveToThread(self.thread)
 
         self.thread.started.connect(self.chrome_connector.run)
         self.chrome_connector.finished.connect(self.thread.quit)
-        # self.chrome_connector.finished.connect(self.chrome_connector.deleteLater)
         self.thread.finished.connect(self.thread.deleteLater)
         self.chrome_connector.report_progress.connect(self.report_progress)
         self.chrome_connector.finished.connect(self.remove_files)
-        self.chrome_connector.crashed.connect(self.open_crash_message)
+        self.chrome_connector.error.connect(self.open_error_message)
 
         self.thread.start()
 
     @staticmethod
-    def start_recovery():
+    def start_recovery() -> None:
         """
         This is a method that recovers the program after a crash. For example, due to Internet problems.
 
@@ -95,10 +114,20 @@ class DownloadWidget(QWidget):
             if os.path.exists(directory):
                 shutil.rmtree(directory)
 
-    def report_progress(self, value):
+    def report_progress(self, value: int) -> None:
+        """
+        The function that sets a value in the progress bar.
+
+        """
+
         self.progress_bar.setValue(value)
 
-    def remove_files(self):
+    def remove_files(self) -> None:
+        """
+        The function responsible for the output format and finishing the downloading.
+
+        """
+
         tmp_files = [
             'chrome-net-export-log.json',
             'chunklist.m3u8',
@@ -119,21 +148,41 @@ class DownloadWidget(QWidget):
         self.open_success_message()
 
     @staticmethod
-    def open_success_message():
+    def open_success_message() -> None:
+        """
+        The function displays a success message when the program has finished downloading.
+
+        """
+
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
         msg.setText("Downloading is done!")
         msg.exec_()
 
     @staticmethod
-    def open_crash_message():
+    def open_error_message() -> None:
+        """
+        The function displays an error message.
+
+        """
+
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
         msg.setText("Error!")
         msg.exec_()
 
-    def show_widget(self):
+    def show_widget(self) -> None:
+        """
+        The function that opens the class window.
+
+        """
+
         self.show()
 
     def closeEvent(self, event) -> None:
+        """
+        The close handler that starts when the class window is closed by user.
+
+        """
+
         self.chrome_connector.deleteLater()

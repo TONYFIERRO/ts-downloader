@@ -23,7 +23,17 @@ from bin.helpwidget import HelpWidget
 
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    """
+    The class responsible for the main window.
+
+    """
+
+    def __init__(self) -> None:
+        """
+        The window initialization and its elements.
+
+        """
+
         super().__init__()
         self.setWindowTitle("TS-Downloader")
         self.setFixedSize(400, 400)
@@ -70,7 +80,12 @@ class MainWindow(QMainWindow):
 
         self.define_connections()
 
-    def define_connections(self):
+    def define_connections(self) -> None:
+        """
+        This function defines connections between elements in the window.
+
+        """
+
         self.button_about.clicked.connect(self.handle_button_about)
         self.button_start.clicked.connect(self.handle_button_start)
         self.line_edit_url.textChanged.connect(self.handle_activation_button_start)
@@ -78,19 +93,39 @@ class MainWindow(QMainWindow):
         self.checkbox_mp3.clicked.connect(self.handle_activation_button_start)
         self.button_how_does_it_work.clicked.connect(self.handle_button_how_does_it_work)
 
-    def handle_button_how_does_it_work(self):
+    def handle_button_how_does_it_work(self) -> None:
+        """
+        This is the handler of 'How does it work?' button that opens a window with the instruction.
+
+        """
+
         self.help_widget.show_widget()
 
-    def handle_button_about(self):
+    def handle_button_about(self) -> None:
+        """
+        This is the handler of 'About' button that opens a window about the program.
+
+        """
+
         self.about_widget.show_widget()
 
-    def handle_button_start(self):
+    def handle_button_start(self) -> None:
+        """
+        This is the handler of start button.
+
+        """
+
         self.download_widget = DownloadWidget(self.line_edit_url.text(),
                                               self.checkbox_mp3.isChecked(),
                                               self.checkbox_mp4.isChecked())
         self.download_widget.show_widget()
 
-    def handle_activation_button_start(self):
+    def handle_activation_button_start(self) -> None:
+        """
+        This is the functions that's responsible for the activation of start button.
+
+        """
+
         if self.line_edit_url.text() != '' and validators.url(self.line_edit_url.text()):
             if self.checkbox_mp3.isChecked() or self.checkbox_mp4.isChecked():
                 self.button_start.setEnabled(True)
